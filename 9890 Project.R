@@ -4,12 +4,13 @@ library(readr)
 library(randomForest)
 library(tidyverse)
 library(gridExtra)
-rf.data <- read_csv("C:/Users/eriks/OneDrive - Smart City Real Estate/Personal/Baruch/S4/STA 9890 - Machine Learning/Project/ailerons.csv")
+rf.data <- read_csv("file_path_here")
 ailerons <- as.matrix(rf.data)
 
-
+# use the old sampling algorithm 
 RNGkind(sample.kind = "Rounding")
 
+# set seed for reproducibility
 set.seed(10)
 
 
@@ -37,7 +38,7 @@ p   = ncol(ailerons[,-1])
 X = ailerons[,1:40]
 y = ailerons[,41]
 
-# Store the Test MSE, Variance, and R^2 for ridge, lasso, elastic net
+# Initialize storage for the Test MSE, Variance, and R^2 for ridge, lasso, elastic net
 
 mse.ridge = matrix(0, nrow = 100, 1)
 mse.lasso = matrix(0, nrow = 100, 1)
@@ -51,7 +52,7 @@ rsq.ridge = matrix(0, 100, 1)
 rsq.lasso = matrix(0, 100, 1)
 rsq.elnet = matrix(0, 100, 1)
 
-# Calculate Training R^2 for ridge, lasso, and elnet 
+# Initialize storage for the Training MSE, Variance, and R^2 for ridge, lasso, and elnet 
 mse.ridge.train = matrix(0, 100, 1)
 mse.lasso.train = matrix(0, 100, 1)
 mse.elnet.train = matrix(0, 100, 1)
@@ -70,7 +71,9 @@ time.cv.ridge = matrix(0, 100, 1)
 time.cv.lasso = matrix(0, 100, 1)
 time.cv.elnet = matrix(0, 100, 1)
 
-cv.times = data.frame(Ridge = mean(time.cv.ridge), Lasso = mean(time.cv.lasso), ElNet = mean(time.cv.elnet))
+cv.times = data.frame(Ridge = mean(time.cv.ridge),
+                      Lasso = mean(time.cv.lasso),
+                      ElNet = mean(time.cv.elnet))
 cv.times
 # Capture the residuals for one of the samples for both the test data and training data
 res.ridge = matrix(0,2750)
